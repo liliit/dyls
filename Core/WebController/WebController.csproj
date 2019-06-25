@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>DYLS.WebController</AssemblyName>
+    <RootNamespace>DYLS.WebController</RootNamespace>
   </PropertyGroup>
 
 </Project>

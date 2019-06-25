@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Linq;
 using Dapper;
 using Model.Pager.Base;
@@ -22,7 +23,7 @@ namespace Kachannel.Tencentads.Common.Utils
         /// <returns></returns>
         public static IDbConnection GetNewConnection()
         {
-            IDbConnection conn = new SqlConnection(ConfigHelper.Get(ConfigHelper.DbConnection));
+            IDbConnection conn = new MySqlConnection(ConfigHelper.Get(ConfigHelper.DbConnection));
             HttpContextHelper.Set(HttpContextHelper.DbConnection, conn);
             conn.Open();
             return conn;

@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>DYLS.Model</AssemblyName>
+    <RootNamespace>DYLS.Model</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

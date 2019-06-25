@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>DYLS.WebApiController</AssemblyName>
+    <RootNamespace>DYLS.WebApiController</RootNamespace>
   </PropertyGroup>
 
 </Project>
