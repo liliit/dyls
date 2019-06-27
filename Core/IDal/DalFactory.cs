@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Reflection;
 using Ninject;
 
@@ -36,27 +34,14 @@ namespace DYLS.IDal
                         continue;
                     }
 
-                    if (type.FullName.IndexOf("IDalArticleBase", StringComparison.Ordinal) != -1)
-                    {
-                        continue;
-                    }
-
-                    if (type.FullName.IndexOf("IDalCrmBase", StringComparison.Ordinal) != -1)
-                    {
-                        continue;
-                    }
-
                     var dalName = dalAssemblyName + type.FullName.Replace(idalAssemblyName, "").Replace(".IDal", ".") + "Dal";
                     var dalType = dal.GetType(dalName);
                     if (dalType != null)
                     {
                         _kernel.Bind(type).To(dalType);
                     }
-
                 }
-
             }
-
         }
 
         /// <summary>

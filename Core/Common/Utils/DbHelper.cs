@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
+using MySql.Data.MySqlClient;
 using Dapper;
 using DYLS.Model.Pager;
 
@@ -38,36 +38,12 @@ namespace DYLS.Common.Utils
         /// 取得一个新的连接
         /// </summary>
         /// <returns></returns>
-        public static IDbConnection GetNewConnection(DbHelperConnectType? type = null)
+        public static IDbConnection GetNewConnection()
         {
-            if (type == null)
-            {
-                type = DbHelperConnectType.Ka;
-            }
-            IDbConnection conn = new SqlConnection(GetConnectionStr(type.Value));
-            HttpContextHelper.Set(HttpContextHelper.DbConn + type.Value.ToString(), conn);
+            IDbConnection conn = new MySqlConnection();
+            HttpContextHelper.Set(HttpContextHelper.DbConn, conn);
             conn.Open();
             return conn;
-        }
-
-        /// <summary>
-        /// GetConnectionStr
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private static string GetConnectionStr(DbHelperConnectType type)
-        {
-            switch (type)
-            {
-                case DbHelperConnectType.Ka:
-                    return ConfigHelper.Get(ConfigHelper.DbConnectionKa);
-
-                case DbHelperConnectType.Crm:
-                    return ConfigHelper.Get(ConfigHelper.DbConnectionCrm);
-            }
-
-            throw new Exception("无效的类型");
-
         }
 
         /// <summary>
@@ -76,18 +52,14 @@ namespace DYLS.Common.Utils
         /// <param name="create">如果为true会创建</param>
         /// <param name="type">如果为true会创建</param>
         /// <returns></returns>
-        public static IDbConnection GetCurrentConnection(bool create = true, DbHelperConnectType? type = null)
+        public static IDbConnection GetCurrentConnection(bool create = true)
         {
-            if (type == null)
-            {
-                type = DbHelperConnectType.Ka;
-            }
-            IDbConnection conn = HttpContextHelper.Get<IDbConnection>(HttpContextHelper.DbConn + type.Value.ToString());
+            IDbConnection conn = HttpContextHelper.Get<IDbConnection>(HttpContextHelper.DbConn);
             if (conn == null)
             {
                 if (create)
                 {
-                    return GetNewConnection(type);
+                    return GetNewConnection();
                 }
 
                 return null;
@@ -110,7 +82,7 @@ namespace DYLS.Common.Utils
         /// <param name="groupby">分组</param>
         /// <param name="type">分组</param>
         /// <returns></returns>
-        public static IList<TP> GetByPager<TP>(string tableName, BasePager pager, string where = "", object param = null, string select = "", string join = "", string orderby = "", string groupby = "", bool tableIsSubQuery = false, DbHelperConnectType? type = null)
+        public static IList<TP> GetByPager<TP>(string tableName, BasePager pager, string where = "", object param = null, string select = "", string join = "", string orderby = "", string groupby = "", bool tableIsSubQuery = false)
         {
 
             var baseSql = " from " + tableName + (tableIsSubQuery ? "" : " as obj ") +
@@ -135,7 +107,7 @@ namespace DYLS.Common.Utils
             }
 
 
-            var count = GetCurrentConnection(type: type).QueryFirstOrDefault<long>(countSql, param);
+            var count = GetCurrentConnection().QueryFirstOrDefault<long>(countSql, param);
             pager.TotalRecord = count;
 
             if (count > 0)
@@ -147,7 +119,7 @@ namespace DYLS.Common.Utils
 
                 var dataSql = "select * from (select ROW_NUMBER() over (" + orderBySql + ") as RowNum, " + (!string.IsNullOrEmpty(select) ? select : "obj.*") + baseSql + ") as sub where sub.RowNum BETWEEN  " + ((pager.CurrentPage - 1) * pager.PageSize + 1) + " and " + ((pager.CurrentPage - 1) * pager.PageSize + pager.PageSize);
 
-                var list = GetCurrentConnection(type: type).Query<TP>(dataSql, param).ToList();
+                var list = GetCurrentConnection().Query<TP>(dataSql, param).ToList();
                 return list;
             }
 
@@ -160,22 +132,18 @@ namespace DYLS.Common.Utils
         /// <param name="createNew"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static IDbTransaction GetCurrentTransaction(bool createNew = true, DbHelperConnectType? type = null)
+        public static IDbTransaction GetCurrentTransaction(bool createNew = true)
         {
-            if (type == null)
-            {
-                type = DbHelperConnectType.Ka;
-            }
-            IDbTransaction transaction = HttpContextHelper.Get<IDbTransaction>(HttpContextHelper.DbTransaction + type.ToString());
+            IDbTransaction transaction = HttpContextHelper.Get<IDbTransaction>(HttpContextHelper.DbTransaction);
             if (transaction == null && createNew)
             {
-                var conn = GetCurrentConnection(type: type);
+                var conn = GetCurrentConnection();
                 if (conn.State != ConnectionState.Open)
                 {
                     conn.Open();
                 }
                 transaction = conn.BeginTransaction();
-                HttpContextHelper.Set(HttpContextHelper.DbTransaction + type, transaction);
+                HttpContextHelper.Set(HttpContextHelper.DbTransaction, transaction);
             }
             return transaction;
         }
@@ -183,34 +151,26 @@ namespace DYLS.Common.Utils
         /// <summary>
         /// 提交事务
         /// </summary>
-        public static void SubmitTrans(DbHelperConnectType? type = null)
+        public static void SubmitTrans()
         {
-            if (type == null)
-            {
-                type = DbHelperConnectType.Ka;
-            }
-            IDbTransaction transaction = HttpContextHelper.Get<IDbTransaction>(HttpContextHelper.DbTransaction + type.ToString());
+            IDbTransaction transaction = HttpContextHelper.Get<IDbTransaction>(HttpContextHelper.DbTransaction);
             if (transaction != null)
             {
                 transaction.Commit();
-                HttpContextHelper.Set(HttpContextHelper.DbTransaction + type.ToString(), null);
+                HttpContextHelper.Set(HttpContextHelper.DbTransaction, null);
             }
         }
 
         /// <summary>
         /// 回滚事务
         /// </summary>
-        public static void RollBackTrans(DbHelperConnectType? type = null)
+        public static void RollBackTrans()
         {
-            if (type == null)
-            {
-                type = DbHelperConnectType.Ka;
-            }
-            IDbTransaction transaction = HttpContextHelper.Get<IDbTransaction>(HttpContextHelper.DbTransaction + type.ToString());
+            IDbTransaction transaction = HttpContextHelper.Get<IDbTransaction>(HttpContextHelper.DbTransaction);
             if (transaction != null)
             {
                 transaction.Rollback();
-                HttpContextHelper.Set(HttpContextHelper.DbTransaction + type.ToString(), null);
+                HttpContextHelper.Set(HttpContextHelper.DbTransaction, null);
             }
         }
 
@@ -221,17 +181,17 @@ namespace DYLS.Common.Utils
         /// <param name="sql"></param>
         /// <param name="paras"></param>
         /// <param name="type"></param>
-        public static int ExecuteNonQuery(string sql, DynamicParameters paras, DbHelperConnectType? type = null)
+        public static int ExecuteNonQuery(string sql, DynamicParameters paras)
         {
-            return GetCurrentConnection(type: type).Execute(sql, paras);
+            return GetCurrentConnection().Execute(sql, paras);
         }
 
         /// <summary>
         /// 关闭当前上下文中的有效数据库连接
         /// </summary>
-        public static void CloseCurrentConnection(DbHelperConnectType? type = null)
+        public static void CloseCurrentConnection()
         {
-            var conn = GetCurrentConnection(false, type);
+            var conn = GetCurrentConnection();
             if (conn != null && conn.State == ConnectionState.Open)
             {
                 conn.Close(); ;
@@ -242,10 +202,10 @@ namespace DYLS.Common.Utils
         /// 执行一行语句, 返回datareader
         /// </summary>
         /// <returns></returns>
-        public static IDataReader ExecuteReader(string tableName, string where = "", DynamicParameters param = null, string select = "", string join = "", string orderby = "", bool tableIsSubQuery = false, DbHelperConnectType? type = null)
+        public static IDataReader ExecuteReader(string tableName, string where = "", DynamicParameters param = null, string select = "", string join = "", string orderby = "", bool tableIsSubQuery = false)
         {
 
-            var conn = GetCurrentConnection(true, type);  //需要新的连接读
+            var conn = GetCurrentConnection();  //需要新的连接读
 
             var baseSql = " from " + tableName + (tableIsSubQuery ? "" : " as obj ") +
                           (!string.IsNullOrEmpty(join) ? join : "") + " " +
