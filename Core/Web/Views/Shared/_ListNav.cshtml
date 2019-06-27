@@ -1,0 +1,80 @@
+﻿@using DYLS.Common.Id
+@using DYLS.Common.Utils
+@using DYLS.IDal
+@using DYLS.IDal.Web
+@using DYLS.Model.Db.Web
+@model DYLS.Model.Ui.ListNav
+@{
+    var category = HttpContextHelper.Get<Category>(HttpContextHelper.Category);
+    var topCategory = HttpContextHelper.Get<Category>(HttpContextHelper.TopCategory);
+    var secCategory = HttpContextHelper.Get<Category>(HttpContextHelper.SecCategory);
+    var referenceCategory = HttpContextHelper.Get<Category>(HttpContextHelper.ReferenceCategory);
+
+    var allSubCategory = DalFactory.GetInstance<IDalCategory>().GetChildByTopGuid(referenceCategory == null ? topCategory.Guid : referenceCategory.Guid);
+}
+@if (allSubCategory != null)
+{
+    var select = "";
+    var sec = allSubCategory.Where(o => o.Level == CategoryLevel.SecondCategory).ToList();
+    if (sec.Count > 1)
+    {
+        <div class="top-category">
+            @if (topCategory.HasAll)
+            {
+                <div class="item">
+                    <a href="~/List/Index/@(topCategory.Guid)" class="all">全部</a>
+                </div>
+            }
+            @foreach (var obj in sec)
+            {
+                if (secCategory != null && secCategory.Id == obj.Id)
+                {
+                    select = "current";
+                }
+                else
+                {
+                    select = "";
+                }
+                <div class="item">
+                    <a href="~/List/Index/@(obj.Guid)" title="@(obj.Name)" class="@select">@(obj.Name)</a>
+                </div>
+            }
+            <div class="height1"></div>
+        </div>
+
+        if (secCategory != null)
+        {
+            var thr = allSubCategory.Where(o => o.Level == CategoryLevel.ThirdCategory && o.Parent == secCategory.Id).ToList();
+            if (thr.Count > 1)
+            {
+                <div class="top-sub-category">
+                    <div class="tsc-inner">
+                        <div class="item">
+                            <a href="~/List/Index/@(secCategory.Guid)" class="all">全部</a>
+                        </div>
+                        @foreach (var obj in thr)
+                        {
+                            if (category.Id == obj.Id)
+                            {
+                                select = "current";
+                            }
+                            else
+                            {
+                                select = "";
+                            }
+                            <div class="item">
+                                <a href="~/List/Index/@(obj.Guid)" title="@(obj.Name)" class="@select">@(obj.Name)</a>
+                            </div>
+                        }
+                        <div class="height1"></div>
+                    </div>
+
+                </div>
+            }
+        }
+        if (Model == null || (Model != null && Model.ShowLine))
+        {
+            <div class="line10"></div>
+        }
+    }
+}

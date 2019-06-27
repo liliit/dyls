@@ -1,0 +1,44 @@
+﻿@using DYLS.Common.Id
+@{
+    ViewData[ViewDataId.ShowBottom] = ViewDataId.ShowBottom_TypeCopyright;
+    ViewData[ViewDataId.ShowTelBtn] = ViewDataId.ShowTelBtn_TypeHide;
+    ViewData[ViewDataId.ShowTop] = ViewDataId.ShowTop_TypeHide;
+    ViewData[ViewDataId.Page] = "login";
+}
+<div class="content-inner reg">
+    <div class="inner">
+        <div class="banner">
+            <img src="~/images/reg/banner.jpg" class="auto-size-img" />
+        </div>
+        <div class="form">
+            <div class="item has-btn name-width-1">
+                <div class="icon mobile-icon"></div>
+                <div class="name">手机号码</div>
+                <div class="input">
+                    <input type="text" name="mobile" maxlength="11" value="" placeholder="填写手机号码">
+                </div>
+                <div class="btn">
+                    <a href="javascript:void(0);" class="send-code">发送验证码</a>
+                </div>
+            </div>
+            <div class="item name-width-1">
+                <div class="icon code-icon"></div>
+                <div class="name">验证码</div>
+                <div class="input">
+                    <input type="text" value="" name="code" maxlength="6" placeholder="输入验证码">
+                </div>
+            </div>
+            <div class="height50"></div>
+            <div class="height50"></div>
+            <a href="javascript:void(0);" class="submit-btn">
+                提 交
+            </a>
+            <div class="height20"></div>
+            <div align="center">
+                <a href="https://img.tencentads.com/adpage/home/index/TSAF44831449" style="color: #009afe;">
+                    用户手册
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

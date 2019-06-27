@@ -1,0 +1,28 @@
+﻿@using DYLS.Common.Utils
+@using DYLS.IDal
+@using DYLS.IDal.Web
+@model DYLS.Model.Ui.ArticleDoc
+@{
+    var files = DalFactory.GetInstance<IDalArticleDoc>().Get(Model.Type, Model.ArticleId);
+    if (files.Any())
+    {
+        <div class="file-list">
+            @*<div class="max-title">文件列表</div>*@
+            <div class="cl-c">
+                @foreach (var file in files)
+                {
+                    <div class="list">
+                        <div class="l">
+                            <a href="@(ConfigHelper.Get(ConfigHelper.FileServerUrl)+ file.FilePath)" target="_blank">
+                                @file.Title
+                            </a>
+                        </div>
+                        <div class="r">
+                            <a href="javascript:void(0);" class="send-mail" data-id="@file.Id" data-from="article">发送给我</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}

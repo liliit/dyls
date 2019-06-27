@@ -1,0 +1,30 @@
+﻿@using System.Web
+@using DYLS.Common.Id
+@using DYLS.IDal
+@using DYLS.IDal.Web
+@using DYLS.Model.Db.Web
+@{
+    ViewData[ViewDataId.ShowTop] = ViewDataId.ShowTop_TypeHide;
+    ViewData[ViewDataId.ShowTelBtn] = ViewDataId.ShowTelBtn_TypeHide;
+    ViewData[ViewDataId.Page] = "noaccess";
+}
+<div class="content-inner error">
+    <div class="inner">
+        <div class="msg noaccess">
+            很抱歉，您不能访问此栏目<br />
+            您可以
+            <div class="height50"></div>
+            <div class="btn">
+                <a href="~/">返回首页</a>
+                @if (ViewBag.User != null && ViewBag.User.Status == UserStatus.Ready)
+                {
+                    <a href="~/My/Info/?fromurl=@(ViewBag.Url)" class="positive">服务商验证</a>
+                }
+                else if (ViewBag.User != null && !string.IsNullOrEmpty(ViewBag.Rid))
+                {
+                    <a href="javascript:void(0);" data-id="@ViewBag.Rid" class="positive apply-btn">申请权限</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

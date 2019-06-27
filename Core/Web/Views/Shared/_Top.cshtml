@@ -1,0 +1,50 @@
+﻿@*@using DYLS.Common.Utils
+    @using DYLS.IDal
+    @using DYLS.IDal.Web
+    @using DYLS.Model.Db.Web*@
+@{
+    //var nav = DalFactory.GetInstance<IDalCategory>().GetNav();
+    //var controller = HttpContextHelper.Get<string>(HttpContextHelper.Controller);
+    //var action = HttpContextHelper.Get<string>(HttpContextHelper.Action);
+    //var topcategory = HttpContextHelper.Get<Category>(HttpContextHelper.TopCategory);
+}
+
+@*
+    <div class="nav">
+        <div class="nav-c">
+            @if (controller == "home" && action == "index")
+            {
+                <a class="current" href="~/">首页</a>
+            }
+            else
+            {
+                <a href="~/">首页</a>
+            }
+            @{
+                foreach (var category in nav)
+                {
+                    if (topcategory != null && category.Id == topcategory.Id)
+                    {
+                        <a href="~/List/Index/@category.Guid" data-id="@category.Guid" class="current">@category.Name</a>
+                    }
+                    else
+                    {
+                        <a href="~/List/Index/@category.Guid" data-id="@category.Guid">@category.Name</a>
+                    }
+                }
+            }
+        </div>
+        $1$<a href="~/Search/" class="search"></a>#1#
+        <a href="javascript:void(0);" class="search"></a>
+    </div>
+*@
+
+<div class="new-top">
+    <div class="logo">
+        <a href="~/"><img src="~/images/logo.png" /></a>
+    </div>
+    <a href="~/Search/" class="search-btn"></a>
+    <a href="~/My/" class="person-btn"></a>
+    <a href="javascript:void(0);" class="menu-btn"></a>
+</div>
+

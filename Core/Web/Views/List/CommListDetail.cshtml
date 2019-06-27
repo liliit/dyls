@@ -1,0 +1,36 @@
+﻿@using DYLS.Common.Id
+@using DYLS.Common.Utils
+@using DYLS.Model.Db.Web
+@{
+    ViewData[ViewDataId.Page] = "commlistdetail";
+    ViewData[ViewDataId.ShowTop] = ViewDataId.ShowTop_TypeHide;
+    var data = HttpContextHelper.Get<CommListArticle>(HttpContextHelper.Model);
+    ViewData[ViewDataId.ShareTitle] = data.ShareTitle;
+    if (!string.IsNullOrEmpty(data.Description))
+    {
+        ViewData[ViewDataId.ShareDesc] = data.Description;
+    }
+    if (!string.IsNullOrEmpty(data.ShareImage))
+    {
+        ViewData[ViewDataId.ShareImg] = ConfigHelper.Get(ConfigHelper.FileServerUrl) + data.ShareImage;
+    }
+
+    var category = HttpContextHelper.Get<Category>(HttpContextHelper.Category);
+    var topCategory = HttpContextHelper.Get<Category>(HttpContextHelper.TopCategory);
+}
+
+<div class="content-inner detail" data-id="@data.Guid" data-cid="@category.Guid" data-tid="@topCategory.Guid">
+    <div class="inner">
+        <div class="dc">
+            <div class="title">
+                @data.Title
+            </div>
+            <div class="date">
+                @data.CreateTime.ToString("yyyy-MM-dd") <a href="~/list/index/@(category.Guid)">@(category.Name)</a>
+            </div>
+            @Html.Raw(data.Content)
+            @Html.Partial("_ArticleDoc", new DYLS.Model.Ui.ArticleDoc() { Type = topCategory.Type, ArticleId = data.Id })
+            @Html.Partial("_Qr")
+        </div>
+    </div>
+</div>

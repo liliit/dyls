@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
-namespace Model.Response
+namespace DYLS.Model.Response
 {
+    /// <summary>
+    /// 响应结果类
+    /// </summary>
     public class ResponseResult
     {
         /// <summary>

@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyName>DYLS.SmallRoutineApiController</AssemblyName>
-    <RootNamespace>DYLS.SmallRoutineApiController</RootNamespace>
-  </PropertyGroup>
-
-</Project>

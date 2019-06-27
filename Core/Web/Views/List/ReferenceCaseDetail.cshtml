@@ -1,0 +1,80 @@
+﻿@using DYLS.Common.Id
+@using DYLS.Common.Utils
+@using DYLS.IDal
+@using DYLS.IDal.Web
+@using DYLS.Model.Db.Web
+@{
+    ViewData[ViewDataId.ShowTop] = ViewDataId.ShowTop_TypeHide;
+    var model = HttpContextHelper.Get<ReferenceCaseArticle>(HttpContextHelper.Model);
+    var data = DalFactory.GetInstance<IDalCaseArticle>().GetById(model.CaseArticleId);
+    ViewData[ViewDataId.ShareTitle] = data.ShareTitle;
+    if (!string.IsNullOrEmpty(data.Description))
+    {
+        ViewData[ViewDataId.ShareDesc] = data.Description;
+    }
+    if (!string.IsNullOrEmpty(data.Image))
+    {
+        ViewData[ViewDataId.ShareImg] = ConfigHelper.Get(ConfigHelper.FileServerUrl) + SystemHelper.ConvertImagePath(data.Image, 100, 100);
+    }
+    var topCategory = HttpContextHelper.Get<Category>(HttpContextHelper.TopCategory);
+}
+
+<div class="content-inner detail case">
+    <div class="inner">
+        <div align="center">
+            <div class="height10"></div>
+            <div style="background-image: url(@(ConfigHelper.Get(ConfigHelper.FileServerUrl) + data.CompanyLogoImage))" class="company">
+                @data.CompanyName
+            </div>
+            <div class="height10"></div>
+        </div>
+        <div class="title">
+            @data.Title
+        </div>
+        <div class="img">
+            <img src="@(ConfigHelper.Get(ConfigHelper.FileServerUrl) + data.Image)" class="auto-size-img" />
+        </div>
+
+        @{
+            if (!string.IsNullOrEmpty(data.Label1)
+                || !string.IsNullOrEmpty(data.Label2)
+                || !string.IsNullOrEmpty(data.Label3))
+            {
+                <div class="labels">
+                    @if (!string.IsNullOrEmpty(data.Label1))
+                    {
+                        <div class="item">
+                            <div class="ic">
+                                <div class="num">@data.LabelVal1</div>
+                                <div class="text">@data.Label1</div>
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(data.Label2))
+                    {
+                        <div class="item">
+                            <div class="ic">
+                                <div class="num">@data.LabelVal2</div>
+                                <div class="text">@data.Label2</div>
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(data.Label3))
+                    {
+                        <div class="item">
+                            <div class="ic">
+                                <div class="num">@data.LabelVal3</div>
+                                <div class="text">@data.Label3</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        }
+        <div class="dc">
+            @Html.Raw(data.Content)
+        </div>
+        @Html.Partial("_ArticleDoc", new DYLS.Model.Ui.ArticleDoc() { Type = topCategory.Type, ArticleId = data.Id })
+        @Html.Partial("_Qr")
+    </div>
+</div>

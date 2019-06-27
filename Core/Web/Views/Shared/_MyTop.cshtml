@@ -1,0 +1,60 @@
+﻿@using DYLS.Common.Utils
+@using DYLS.Model.Db.Web
+@model DYLS.Model.Ui.MyTop
+@{
+    var user = HttpContextHelper.Get<User>(HttpContextHelper.User);
+    var wxUser = HttpContextHelper.Get<WxUser>(HttpContextHelper.WxUser);
+}
+<div class="p-center">
+    <div class="info">
+        <div class="ic">
+            <div class="photo">
+                @if (wxUser == null)
+                {
+                    <img src="~/images/icon/person.png" width="70" height="70" />
+                }
+                else
+                {
+                    <img src="@wxUser.Headimgurl" width="70" height="70" />
+                }
+            </div>
+            <div class="name">
+                <div class="pname">@(user.Name)</div>
+                <div class="cname">@(user.CompanyName + (user.Status == UserStatus.Ready ? "(游客)" : user.Status == UserStatus.Created ? "(待审)" : ""))</div>
+            </div>
+            <div class="btn">
+                <a href="~/My/Info/">修改信息</a>
+            </div>
+        </div>
+        <div class="height10"></div>
+        <div align="right">
+            <a href="https://img.tencentads.com/adpage/home/index/TSAF44831449" style="color: #009afe;">
+                用户手册
+            </a>
+        </div>
+
+    </div>
+    <div class="tab">
+        <div>
+            @if (Model.Current == 1)
+            {
+                <a href="~/My/" class='current'>我的消息</a>
+            }
+            else
+            {
+                <a href="~/My/">我的消息</a>
+            }
+        </div>
+        <div>
+            @if (Model.Current == 2)
+            {
+                <a href="~/My/Activity/" class='current'>我的活动</a>
+            }
+            else
+            {
+                <a href="~/My/Activity/">我的活动</a>
+            }
+
+        </div>
+    </div>
+</div>

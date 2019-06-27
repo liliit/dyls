@@ -1,0 +1,72 @@
+﻿@using DYLS.IDal
+@using DYLS.IDal.Web
+@{
+    var list1 = DalFactory.GetInstance<IDalCaseIndustry>().GetAll();
+    var list2 = DalFactory.GetInstance<IDalCasePurpose>().GetAll();
+    var list3 = DalFactory.GetInstance<IDalCaseResource>().GetAll();
+    var list4 = DalFactory.GetInstance<IDalCaseCompanySize>().GetAll();
+}
+<div class="where">
+
+
+    <div class="item" data-name="industry">
+        <div class="ic">
+            <a href="javascript:void(0);" data-default="投放行业">
+                <span></span>
+            </a>
+            <div class="drop">
+                <div class="dc">
+                    <a href="javascript:void(0);" data-val="0">不限</a>
+                    @foreach (var obj in list1)
+                    {
+                        <a href="javascript:void(0);" data-val="@obj.Id">@obj.Name</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="item" data-name="purpose">
+        <div class="ic">
+            <a href="javascript:void(0);" data-default="投放目的">
+                <span></span>
+            </a>
+            <div class="drop">
+                <a href="javascript:void(0);" data-val="0">不限</a>
+                @foreach (var obj in list2)
+                {
+                    <a href="javascript:void(0);" data-val="@obj.Id">@obj.Name</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="item" data-name="resource">
+        <div class="ic">
+            <a href="javascript:void(0);" data-default="广告资源">
+                <span></span>
+            </a>
+            <div class="drop">
+                <a href="javascript:void(0);" data-val="0">不限</a>
+                @foreach (var obj in list3)
+                {
+                    <a href="javascript:void(0);" data-val="@obj.Id">@obj.Name</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="item" data-name="companySize">
+        <div class="ic">
+            <a href="javascript:void(0);" data-default="企业规模">
+                <span></span>
+            </a>
+            <div class="drop">
+                <a href="javascript:void(0);" data-val="0">不限</a>
+                @foreach (var obj in list4)
+                {
+                    <a href="javascript:void(0);" data-val="@obj.Id">@obj.Name</a>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="line10"></div>

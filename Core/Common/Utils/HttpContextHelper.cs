@@ -1,15 +1,17 @@
-﻿using System;
+﻿
+
+
+using System;
 using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 
-namespace Kachannel.Tencentads.Common.Utils
+namespace DYLS.Common.Utils
 {
     public static class HttpContextHelper
     {
-
         /// <summary>
         /// 获取当前HttpCurrent
         /// </summary>
@@ -19,6 +21,23 @@ namespace Kachannel.Tencentads.Common.Utils
             var hca = new HttpContextAccessor();
             return hca.HttpContext;
         }
+
+        /// <summary>
+        /// User
+        /// </summary>
+        public const string User = "User";
+
+        /// <summary>
+        /// Role
+        /// </summary>
+        public const string Role = "Role";
+
+        /// <summary>
+        /// Model
+        /// </summary>
+        public const string Model = "Model";
+
+
         /// <summary>
         /// 上下文中存放事务的key
         /// </summary>
@@ -27,7 +46,7 @@ namespace Kachannel.Tencentads.Common.Utils
         /// <summary>
         /// DbConn
         /// </summary>
-        public const string DbConnection = "DbConnection";
+        public const string DbConn = "DbConn";
 
         /// <summary>
         /// Env

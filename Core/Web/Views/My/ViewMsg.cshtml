@@ -1,0 +1,79 @@
+﻿@using DYLS.Common.Id
+@using DYLS.Common.Utils
+@using DYLS.Model.Db.Web
+@using DYLS.Model.Wx.Request
+@using Newtonsoft.Json;
+
+@model Msg
+@{
+    ViewData[ViewDataId.ShowTop] = ViewDataId.ShowTop_TypeHide;
+}
+<div class="content-inner detail">
+    <div class="inner">
+
+
+        <div class="dc">
+            <div class="title">
+                @Model.Title
+            </div>
+            <div class="date">
+                @Model.CreateTime.ToString("yyyy-MM-dd")
+            </div>
+            @{
+
+                if (Model.Type == MsgType.Article)
+                {
+                    @Html.Raw(Model.Description)
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Model.TemplateMsg))
+                    {
+                        var template = JsonConvert.DeserializeObject<TemplateMsgOutData>(Model.TemplateMsg);
+
+                        if (template.First != null)
+                        {
+                            <p style="color:@template.First.Color">
+                                @template.First.Value
+                            </p>
+                        }
+                        if (template.KeyWord1 != null)
+                        {
+                            <p style="color:@template.KeyWord1.Color">
+                                服务编号： @template.KeyWord1.Value
+                            </p>
+                        }
+                        if (template.KeyWord2 != null)
+                        {
+                            <p style="color:@template.KeyWord2.Color">
+                                服务类型： @template.KeyWord2.Value
+                            </p>
+                        }
+                        if (template.KeyWord3 != null)
+                        {
+                            <p style="color:@template.KeyWord3.Color">
+                                服务内容： @template.KeyWord3.Value
+                            </p>
+                        }
+                        if (template.KeyWord4 != null)
+                        {
+                            <p style="color:@template.KeyWord4.Color">
+                                进度情况： @template.KeyWord4.Value
+                            </p>
+                        }
+                        if (template.Remark != null)
+                        {
+                            <p style="color:@template.Remark.Color">
+                                @template.Remark.Value
+                            </p>
+                        }
+                    }
+                }
+            }
+
+            @Html.Partial("_Qr")
+        </div>
+
+
+    </div>
+</div>

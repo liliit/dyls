@@ -1,0 +1,74 @@
+﻿@using DYLS.Common.Id
+@using DYLS.Common.Utils
+@using DYLS.IDal
+@using DYLS.IDal.Web
+@using DYLS.Model.Db.Web
+@using DYLS.Model.Ui
+@{
+    var category = HttpContextHelper.Get<Category>(HttpContextHelper.Category);
+    var topCategory = HttpContextHelper.Get<Category>(HttpContextHelper.TopCategory);
+    ViewData[ViewDataId.Page] = "courseware";
+    ViewData[ViewDataId.ShowTop] = ViewDataId.ShowTop_TypeCustom;
+    var list1 = DalFactory.GetInstance<IDalCaseIndustry>().GetAll();
+    var list2 = DalFactory.GetInstance<IDalEducationScene>().GetAll();
+    ViewData[ViewDataId.ShowComTop] = ViewDataId.ShowCommTop_Show;
+}
+@section top
+    {
+
+
+    <div class="lecturer-top">
+        @Html.Partial("_ListNav", new ListNav() { ShowLine = false })
+        <div class="where">
+            <div class="item" data-name="industry">
+                <div class="ic">
+                    <a href="javascript:void(0);" data-default="按行业筛选">
+                        <span></span>
+                    </a>
+                    <div class="drop">
+                        <div class="dc">
+                            <a href="javascript:void(0);" data-val="0">不限</a>
+                            @foreach (var obj in list1)
+                            {
+                                <a href="javascript:void(0);" data-val="@obj.Id">@obj.Name</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" data-name="scene">
+                <div class="ic">
+                    <a href="javascript:void(0);" data-default="按场景筛选">
+                        <span></span>
+                    </a>
+                    <div class="drop">
+                        <a href="javascript:void(0);" data-val="0">不限</a>
+                        @foreach (var obj in list2)
+                        {
+                            <a href="javascript:void(0);" data-val="@obj.Id">@obj.Name</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="line10"></div>
+    </div>
+
+}
+<div class="content-inner" data-c1="@(category.Guid)" data-c2="@(topCategory.Guid)">
+    <div class="inner">
+        <div id="vue-content">
+            <div class="img-list">
+                <a :href="'@Url.Content("~/list/detail/")' + item.guid + '/@(topCategory.Guid)'" class="list" v-for="(item,index) in list">
+                    <div class="img">
+                        <img :src="'@(ConfigHelper.Get(ConfigHelper.FileServerUrl))' + item.image" onload="nshp.showThis(this)" width="343" height="163" class="img-block" />
+                    </div>
+                    <div class="title">
+                        {{item.title}}
+                    </div>
+                </a>
+            </div>
+            <div class="nodata" v-if="nodata">暂无数据</div>
+        </div>
+    </div>
+</div>

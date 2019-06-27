@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Model.Response;
+﻿
+
+
+using DYLS.Model.Response;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace Kachannel.Tencentads.Common.Utils
+namespace DYLS.Common.Utils
 {
     public static class JsonResultHelper
     {
@@ -12,6 +15,7 @@ namespace Kachannel.Tencentads.Common.Utils
         private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings()
         {
             ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(), //小驼峰
+            //Converters = new List<JsonConverter>() { new JavaScriptDateTimeConverter() } //javascript时间格式
             DateFormatHandling = DateFormatHandling.IsoDateFormat
         };
 
@@ -60,6 +64,7 @@ namespace Kachannel.Tencentads.Common.Utils
             });
         }
 
+
         /// <summary>
         /// 超时
         /// </summary>
@@ -106,6 +111,15 @@ namespace Kachannel.Tencentads.Common.Utils
         }
 
         /// <summary>
+        /// Url过期
+        /// </summary>
+        /// <returns></returns>
+        public static JsonResult UrlExpire()
+        {
+            return JsonResult(503, "Url过期");
+        }
+
+        /// <summary>
         /// 无效签名
         /// </summary>
         /// <returns></returns>
@@ -115,21 +129,21 @@ namespace Kachannel.Tencentads.Common.Utils
         }
 
         /// <summary>
+        /// 不存在的数据
+        /// </summary>
+        /// <returns></returns>
+        public static JsonResult NotExist()
+        {
+            return JsonResult(401, "不存在的数据");
+        }
+
+        /// <summary>
         /// 无效的验证码
         /// </summary>
         /// <returns></returns>
         public static JsonResult InvalidVerificationCode()
         {
             return JsonResult(701, "无效验证码");
-        }
-
-        /// <summary>
-        /// 需要登陆
-        /// </summary>
-        /// <returns></returns>
-        public static JsonResult RequiredLogin()
-        {
-            return JsonResult(601, "需要登陆");
         }
 
         /// <summary>
@@ -152,13 +166,51 @@ namespace Kachannel.Tencentads.Common.Utils
             return JsonResult(0, msg, data);
         }
 
+
         /// <summary>
-        /// 失败
+        /// 无效签名
         /// </summary>
         /// <returns></returns>
-        public static JsonResult Fail()
+        public static JsonResult InvalidSign()
         {
-            return JsonResult(1, "操作失败");
+            return JsonResult(801, "无效签名");
+        }
+
+
+        /// <summary>
+        /// 需要登陆
+        /// </summary>
+        /// <returns></returns>
+        public static JsonResult RequiredLogin()
+        {
+            return JsonResult(601, "需要登陆");
+        }
+
+        /// <summary>
+        /// 无效密码
+        /// </summary>
+        /// <returns></returns>
+        public static JsonResult InvalidPwd()
+        {
+            return JsonResult(602, "无效密码");
+        }
+
+        /// <summary>
+        /// 存在同名用户
+        /// </summary>
+        /// <returns></returns>
+        public static JsonResult ExistUser()
+        {
+            return JsonResult(603, "存在同名用户");
+        }
+
+        /// <summary>
+        /// 存在同名用户
+        /// </summary>
+        /// <returns></returns>
+        public static JsonResult ExistMobile()
+        {
+            return JsonResult(604, "手机号已经存在!");
         }
 
         /// <summary>
@@ -177,6 +229,43 @@ namespace Kachannel.Tencentads.Common.Utils
         public static JsonResult Error(string msg)
         {
             return JsonResult(500, msg);
+        }
+
+        /// <summary>
+        /// 失败
+        /// </summary>
+        /// <returns></returns>
+        public static JsonResult Fail()
+        {
+            return JsonResult(1, "操作失败");
+        }
+
+        /// <summary>
+        /// 警告
+        /// </summary>
+        /// <returns></returns>
+        public static JsonResult Alert(string msg)
+        {
+            return JsonResult(101, msg);
+        }
+
+        /// <summary>
+        /// BalanceLacking
+        /// </summary>
+        /// <returns></returns>
+        public static JsonResult BalanceLacking()
+        {
+            return JsonResult(5100, "余额不足");
+        }
+
+        /// <summary>
+        /// 更新签名key
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static JsonResult UpdateSignKey(object data)
+        {
+            return JsonResult(-1, "ok", data);
         }
     }
 }

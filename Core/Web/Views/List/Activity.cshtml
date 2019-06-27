@@ -1,0 +1,44 @@
+﻿@using DYLS.Common.Id
+@using DYLS.Common.Utils
+@using DYLS.Model.Db.Web
+@using DYLS.Model.Ui
+@{
+    var category = HttpContextHelper.Get<Category>(HttpContextHelper.Category);
+    var topCategory = HttpContextHelper.Get<Category>(HttpContextHelper.TopCategory);
+    ViewData[ViewDataId.Page] = "activity";
+    //ViewData[ViewDataId.ShowTop] = ViewDataId.ShowTop_TypeCustom;
+    ViewData[ViewDataId.ShowComTop] = ViewDataId.ShowCommTop_Show;
+
+}
+@*@section top
+        {
+        <div class="case-top">
+            @Html.Partial("_ListNav", new ListNav() { ShowLine = false })
+            @Html.Partial("_CaseWhere")
+        </div>
+    }*@
+<div class="content-inner list-page" data-c1="@(category.Guid)" data-c2="@(topCategory.Guid)">
+    <div class="inner">
+
+        <div id="vue-content">
+            <div class="img-list">
+
+                <a :href="item.link" class="list" v-for="(item,index) in list"  v-if="item.image!=null && item.image!==''">
+                    <div class="img">
+                        <img :src="'@(ConfigHelper.Get(ConfigHelper.FileServerUrl))' + nshp.getImagePath(item.image.substring(1),710,340)" onload="nshp.showThis(this)" width="343" height="163" class="img-block" />
+                        <span class="label" v-if="item.label!=null && item.label!=''">{{item.label}}</span>
+                    </div>
+                    <div class="title">
+                        {{item.title}}
+                    </div>
+                    <div class="date">
+                        <span class="span"></span> <span>{{item.activityDatetime}}</span>
+                    </div>
+                </a>
+
+            </div>
+            <div class="nodata" v-if="nodata">暂无数据</div>
+        </div>
+
+    </div>
+</div>

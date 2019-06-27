@@ -1,0 +1,166 @@
+﻿@using DYLS.Common.Id
+@using DYLS.IDal
+@using DYLS.IDal.Web
+@using DYLS.Common.Utils
+@using DYLS.Model.Db.Web
+@{
+    ViewData[ViewDataId.Page] = "search";
+    ViewData[ViewDataId.ShowComTop] = ViewDataId.ShowCommTop_Show;
+    ViewData[ViewDataId.ShowTop] = ViewDataId.ShowTop_TypeCustom;
+    ViewData[ViewDataId.ShowTelBtn] = ViewDataId.ShowTelBtn_TypeHide;
+    ViewData[ViewDataId.HtmlMainId] = "vue-content";
+}
+
+@section top
+    {
+    <div class="search-top">
+        <div class="search-input">
+            <div class="sii">
+                <div class="l">
+                    <form action="javascript:return true;">
+                        <input type="search" v-model="key" @@keyup.enter="search(1)" />
+                    </form>
+                </div>
+                <div class="r">
+                    <a href="javascript:void(0);" class="search-btn" v-on:click="search(1)"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab">
+            <a href="javascript:void(0);" :class="'item'+(current===1 ? ' current' : '')" v-on:click="change(1)">
+                <span class="name">文章</span>
+                <span class="num">({{count1>=100 ? '99+' : count1}})</span>
+            </a>
+            <a href="javascript:void(0);" :class="'item'+(current===2 ? ' current' : '')" v-on:click="change(2)">
+                <span class="name">案例</span>
+                <span class="num">({{count2>=100 ? '99+' : count2}})</span>
+            </a>
+            <a href="javascript:void(0);" :class="'item'+(current===3 ? ' current' : '')" v-on:click="change(3)">
+                <span class="name">课件</span>
+                <span class="num">({{count3>=100 ? '99+' : count3}})</span>
+            </a>
+            <a href="javascript:void(0);" :class="'item'+(current===4 ? ' current' : '')" v-on:click="change(4)">
+                <span class="name">讲师</span>
+                <span class="num">({{count4>=100 ? '99+' : count4}})</span>
+            </a>
+            <a href="javascript:void(0);" :class="'item'+(current===5 ? ' current' : '')" v-on:click="change(5)">
+                <span class="name">问答</span>
+                <span class="num">({{count5>=100 ? '99+' : count5}})</span>
+            </a>
+        </div>
+
+    </div>
+}
+<div class="content-inner search">
+    <div :class="'scroll-content'+(current===1 ? ' current' : '')">
+        <div class="comm-list sc-inner" v-if="list1.length>0">
+            <a :href="(item.link!=null && item.link!='') ? item.link : '@Url.Content("~/list/detail/")' + item.guid + '/' + item.firstCategoryGuid" :class="(item.image!==null && item.image!=='') ? 'list has-img' :'list'" v-for="(item,index) in list1">
+                <div class="title">
+                    <span class="label red" v-if="item.required && !item.read">必读</span> <span class="label gray" v-if="item.required && item.read">必读</span> <span class="label blue" v-if="item.isTop">置顶</span> <span class="label" :style="nshp.getLableColor(item.labelColor)" v-if="!item.isTop && item.label!==null && item.label!==''">{{item.label}}</span>  {{item.title}}
+                </div>
+                <div class="date">
+                    <span>{{item.createTime.toDate().format("yyyy年MM月dd日")}}</span> <span v-if="item.thirdCategory!==null || item.secondCategory!==null || item.firstCategory!==null">|</span> <span v-if="item.thirdCategory!==null || item.secondCategory!==null || item.firstCategory!==null" class="s">{{item.thirdCategory==null ? item.secondCategory==null ? item.firstCategory==null ? '' : item.firstCategory : item.secondCategory : item.thirdCategory}}</span>
+                </div>
+                <div class="img" v-if="item.image!==null && item.image!==''">
+                    <img v-if="item.image.indexOf('http') === -1" :src="'@(ConfigHelper.Get(ConfigHelper.FileServerUrl))' + item.image.substring(1)" class="auto-size-img" onload="nshp.showThis(this)" />
+                    <img v-if="item.image.indexOf('http') !== -1" :src="item.image" onload="nshp.showThis(this)" class="auto-size-img" />
+                </div>
+            </a>
+        </div>
+        <div class="nodata" v-if="nodata1">暂无数据</div>
+    </div>
+    <div :class="'scroll-content'+(current===2 ? ' current' : '')">
+        <div class="img-list2 sc-inner" v-if="list2.length>0">
+            <a :href="'@Url.Content("~/list/detail/")' + item.guid + '/' + item.firstCategoryGuid" class="list" v-for="(item,index) in list2">
+                <div class="img">
+                    <img :src="'@(ConfigHelper.Get(ConfigHelper.FileServerUrl))' + nshp.getImagePath(item.image.substring(1),260,124)" onload="nshp.showThis(this)" class="auto-size-img" />
+                    <div class="logo" :style="'background-image: url(@(ConfigHelper.Get(ConfigHelper.FileServerUrl))' + item.companyLogoImage.substring(1)+ ')'">
+                    </div>
+                    <div class="title">
+                        <div class="tc">
+                            {{item.companyName}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="desc">
+                    <div class="title">
+                        {{item.title}}
+                    </div>
+                    <div class="attrs">
+                        <div class="item" v-if="item.label1!=null && item.label1!=''">
+                            <div class="ic">
+                                <div class="num">{{item.labelVal1}}</div>
+                                <div class="text">{{item.label1}}</div>
+                            </div>
+                        </div>
+                        <div class="item" v-if="item.label2!=null && item.label2!=''">
+                            <div class="ic">
+                                <div class="num">{{item.labelVal2}}</div>
+                                <div class="text">{{item.label2}}</div>
+                            </div>
+                        </div>
+                        <div class="item" v-if="item.label3!=null && item.label3!=''">
+                            <div class="ic">
+                                <div class="num">{{item.labelVal3}}</div>
+                                <div class="text">{{item.label3}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </a>
+        </div>
+        <div class="nodata" v-if="nodata2">暂无数据</div>
+    </div>
+    <div :class="'scroll-content'+(current===3 ? ' current' : '')">
+        <div class="img-list sc-inner" v-if="list3.length>0">
+            <a :href="'@Url.Content("~/list/detail/")' + item.guid + '/' + item.firstCategoryGuid" class="list" v-for="(item,index) in list3">
+                <div class="img">
+                    <img :src="'@(ConfigHelper.Get(ConfigHelper.FileServerUrl))' + item.image" onload="nshp.showThis(this)" width="360" height="172" class="img-block" />
+                </div>
+                <div class="title">
+                    {{item.title}}
+                </div>
+            </a>
+        </div>
+        <div class="nodata" v-if="nodata3">暂无数据</div>
+    </div>
+    <div :class="'scroll-content'+(current===4 ? ' current' : '')">
+
+        <div class="celebrity sc-inner" v-if="list4.length>0">
+            <a :href="'@Url.Content("~/list/detail/")' + item.guid + '/' + item.firstCategoryGuid" class="list" v-for="(item,index) in list4" class="list">
+                <div class="img">
+                    <img :src="'@(ConfigHelper.Get(ConfigHelper.FileServerUrl))' + item.image" width="90" height="120" onload="nshp.showThis(this)" class="img-block" />
+                </div>
+                <div class="desc">
+                    <div class="name">
+                        {{item.title}}
+                    </div>
+                    <div class="company" style="margin-bottom: 0px;">
+                        {{item.companyName}}
+                    </div>
+                    <div class="company">
+                        {{item.label}}
+                    </div>
+                    <div class="text">
+                        {{item.description}}
+                    </div>
+                    <div class="label">{{item.secondCategory}}</div>
+                </div>
+            </a>
+        </div>
+        <div class="nodata" v-if="nodata4">暂无数据</div>
+
+    </div>
+    <div :class="'scroll-content'+(current===5 ? ' current' : '')">
+        <div class="sqa sc-inner" v-if="list5.length>0">
+            <div class="list" v-for="(item,index) in list5">
+                <a :href="'@Url.Content("~/list/detail/")' + item.guid+ '/' + item.firstCategoryGuid" :title="item.title">{{item.title}}</a>
+            </div>
+        </div>
+        <div class="nodata" v-if="nodata5">暂无数据</div>
+    </div>
+</div>

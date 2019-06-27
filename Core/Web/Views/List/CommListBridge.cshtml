@@ -1,0 +1,43 @@
+﻿@using DYLS.Common.Id
+@using DYLS.Common.Utils
+@using DYLS.IDal
+@using DYLS.IDal.Web
+@using DYLS.Model.Db.Web
+@{
+    var topCategory = HttpContextHelper.Get<Category>(HttpContextHelper.TopCategory);
+    ViewData[ViewDataId.ShowTop] = ViewDataId.ShowTop_TypeCustom;
+    ViewData[ViewDataId.ShowComTop] = ViewDataId.ShowCommTop_Show;
+}
+<div class="content-inner list-page comm-list-bridge">
+    <div class="inner">
+        <div class="img-list">
+            @{
+                var child = DalFactory.GetInstance<IDalCategory>().GetChild(topCategory.Id);
+                foreach (var category in child)
+                {
+                    if (!category.InTheOpen)
+                    {
+                        continue;
+                    }
+                    var link = "";
+                    if (!string.IsNullOrEmpty(category.Link))
+                    {
+                        link = category.Link;
+                    }
+                    else
+                    {
+                        link = "~/list/index/" + category.Guid;
+                    }
+                    <a href="@Url.Content(link)" class="list">
+                        <div class="img">
+                            <img src="@(ConfigHelper.Get(ConfigHelper.FileServerUrl) + Url.Content(category.Image))" width="343" height="163" class="img-block" />
+                        </div>
+                        @*<div class="title">
+                            @category.Name
+                        </div>*@
+                    </a>
+                }
+            }
+        </div>
+    </div>
+</div>

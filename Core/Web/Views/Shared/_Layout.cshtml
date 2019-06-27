@@ -1,77 +1,235 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using System.Web
+@using DYLS.Common.Id
+@using DYLS.Common.Utils
+@using DYLS.IDal
+@using DYLS.IDal.Web
+@using DYLS.Model.Db.Web
+@{
+    var topCategory = HttpContextHelper.Get<Category>(HttpContextHelper.TopCategory);
+}
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Web</title>
-
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
-    </environment>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="UTF-8">
+    <title>@Html.Raw(string.IsNullOrEmpty(ViewData[ViewDataId.WebTitle] as string) ? (topCategory == null ? "" : topCategory.Name + "-") + ConfigHelper.Get(ConfigHelper.WebTitle) : "")</title>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="@ViewData[ViewDataId.Page]" name="page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="keywords" content="@Html.Raw(string.IsNullOrEmpty(ViewData[ViewDataId.WebKeywords] as string) ? ConfigHelper.Get(ConfigHelper.WebKeywords) : (string)ViewData[ViewDataId.WebKeywords])" />
+    <meta name="description" content="@Html.Raw(string.IsNullOrEmpty(ViewData[ViewDataId.WebDescription] as string) ? ConfigHelper.Get(ConfigHelper.WebDescription) : (string)ViewData[ViewDataId.WebDescription])" />
+    <meta name="share-title" content="@Html.Raw(string.IsNullOrEmpty(ViewData[ViewDataId.ShareTitle] as string) ? ConfigHelper.Get(ConfigHelper.ShareTitle) : (string) ViewData[ViewDataId.ShareTitle])" />
+    <meta name="share-desc" content="@Html.Raw(string.IsNullOrEmpty(ViewData[ViewDataId.ShareDesc] as string) ? ConfigHelper.Get(ConfigHelper.ShareDesc) : (string) ViewData[ViewDataId.ShareDesc])" />
+    <meta name="share-link" content="@(string.IsNullOrEmpty(ViewData[ViewDataId.ShareLink] as string) ? HttpUtility.HtmlEncode(SystemHelper.GetCurrentUrl()) : HttpUtility.HtmlEncode((string) ViewData[ViewDataId.ShareLink]))" />
+    <meta name="share-imgUrl" content="@(string.IsNullOrEmpty(ViewData[ViewDataId.ShareImg] as string) ? ConfigHelper.Get(ConfigHelper.WebHost) + "images/share.jpg" : (string) ViewData[ViewDataId.ShareImg])" />
+    <script type="text/javascript" src="~/scripts/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery.mobile.touch.min.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery.md5.min.js"></script>
+    <script type="text/javascript" src="~/scripts/inobounce.min.js"></script>
+    <script type="text/javascript" src="~/scripts/vue.js"></script>
+    <script type="text/javascript" src="~/layer/layer.js"></script>
+    <script type="text/javascript" src="~/scripts/core.min.js"></script>
+    <link type="text/css" href="~/css/main.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div class="ns-main" id="@ViewData[ViewDataId.HtmlMainId]">
+        <div class="ns-content">
+
+            @{
+                var showTelBtn = ViewData[ViewDataId.ShowTelBtn] as string;
+                var showTop = ViewData[ViewDataId.ShowTop] as string;
+                var showBottom = ViewData[ViewDataId.ShowBottom] as string;
+                var showCommTop = ViewData[ViewDataId.ShowComTop] as string;
+
+
+                if (string.IsNullOrEmpty(showTelBtn))
+                {
+                    showTelBtn = ViewDataId.ShowTelBtn_TypeShow;
+                }
+
+                if (string.IsNullOrEmpty(showTop))
+                {
+                    showTop = ViewDataId.ShowTop_TypeComm;
+                }
+
+                if (string.IsNullOrEmpty(showBottom))
+                {
+                    showBottom = ViewDataId.ShowBottom_TypeTab;
+                }
+
+                if (string.IsNullOrEmpty(showCommTop))
+                {
+                    showCommTop = ViewDataId.ShowCommTop_Hide;
+                }
+            }
+
+            @*通用头*@
+            <div class="top">
+                @if (showCommTop == ViewDataId.ShowCommTop_Show)
+                {
+                    @Html.Partial("_Top")
+                }
+                @*自定义头*@
+                @if (showTop == ViewDataId.ShowTop_TypeCustom)
+                {
+                    @RenderSection("top", required: false)
+                }
+            </div>
+
+            @*主体*@
+            @RenderBody()
+
+            <div class="bottom">
+                @*底部1 tabbar*@
+                @if (showBottom == ViewDataId.ShowBottom_TypeTab)
+                {
+                    @Html.Partial("_Bottom1")
+                }
+                @*底部2 版权*@
+                @if (showBottom == ViewDataId.ShowBottom_TypeCopyright)
+                {
+                    @Html.Partial("_Bottom2")
+                }
+                @*自定义底部*@
+                @if (showBottom == ViewDataId.ShowBottom_TypeCustom)
+                {
+                    @RenderSection("bottom", required: false)
+                }
+            </div>
+
+            @*浮动的在线按钮*@
+            @if (showTelBtn == ViewDataId.ShowTelBtn_TypeShow)
+            {
+                <div class="global-contact">
+                    <a href="http://q.url.cn/ab6E03?_type=wpa&qidian=true">
+                        <img src="~/images/icon/hotline.png" width="54" height="54" />
+                    </a>
+                </div>
+            }
+
+
+            @{
+                var nav = DalFactory.GetInstance<IDalCategory>().GetNav();
+                var controller = HttpContextHelper.Get<string>(HttpContextHelper.Controller);
+                var action = HttpContextHelper.Get<string>(HttpContextHelper.Action);
+                var topcategory = HttpContextHelper.Get<Category>(HttpContextHelper.TopCategory);
+                var referenceCategory = HttpContextHelper.Get<Category>(HttpContextHelper.ReferenceCategory);
+            }
+
+
+            <div class="menu" style="z-index: 10">
+                <div class="mc">
+                    <div class="mc-inner">
+
+                        @if (controller == "home" && action == "index")
+                        {
+                            <a href="~/" class="item current">
+                                <span class="icon" style="background-image: url(/images/icon/nav/h.png);"></span>
+                                <span class="text">首页</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="~/" class="item">
+                                <span class="icon" style="background-image: url(/images/icon/nav/h.png);"></span>
+                                <span class="text">首页</span>
+                            </a>
+                        }
+
+                        @{
+                            foreach (var category in nav)
+                            {
+                                if ((topcategory != null && category.Id == topcategory.Id) || (referenceCategory != null ? (referenceCategory.Id == category.Id ? true : false) : false))
+                                {
+                                    <a href="~/List/Index/@category.Guid" data - id="@category.Guid" class="item current">
+                                        <span class="icon" style="background-image: url(/images/icon/nav/icon-g@((int)category.NavIcon).png);"></span>
+                                        <span class="text">@category.Name</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="~/List/Index/@category.Guid" data-id="@category.Guid" class="item">
+                                        <span class="icon" style="background-image: url(/images/icon/nav/icon-g@((int)category.NavIcon).png);"></span>
+                                        <span class="text">@category.Name</span>
+                                    </a>
+                                }
+                            }
+                        }
+
+                    </div>
+                </div>
+                <div class="close">
+                    <a href="javascript:void(0);">关闭</a>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
-        </script>
-    </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @RenderSection("Scripts", required: false)
+    </div>
+    <link rel="stylesheet" href="~/pugin/photoswipe/photoswipe.css">
+    <link rel="stylesheet" href="~/pugin/photoswipe/default-skin/default-skin.css">
+    <script src="~/pugin/photoswipe/photoswipe.min.js"></script>
+    <script src="~/pugin/photoswipe/photoswipe-ui-default.min.js"></script>
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="" id="redirect-link" style="display: none;"></a>
+    <script src="https://s5.cnzz.com/z_stat.php?id=1275868898&web_id=1275868898" language="JavaScript"></script>
+    @*<script>
+            var _mtac = {};
+            (function () {
+                var mta = document.createElement("script");
+                mta.src = "//pingjs.qq.com/h5/stats.js?v2.0.4";
+                mta.setAttribute("name", "MTAH5");
+                mta.setAttribute("sid", "500671270");
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(mta, s);
+            })();
+        </script>*@
+    <script>
+        var _mtac = {};
+        (function () {
+            var mta = document.createElement("script");
+            mta.src = "//pingjs.qq.com/h5/stats.js?v2.0.4";
+            mta.setAttribute("name", "MTAH5");
+            mta.setAttribute("sid", "500674630");
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(mta, s);
+        })();
+    </script>
 </body>
 </html>
