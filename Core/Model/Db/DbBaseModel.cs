@@ -13,7 +13,7 @@ namespace DYLS.Model.Db
         public long Id { get; set; }
         public byte Flag { get; set; } = 0;
         public int OrderID { get; set; }
-        public virtual DateTime CreateTime { get; set; } = DateTime.Now;
-        public virtual DateTime UpdateTime { get; set; } = DateTime.Now;
+        public virtual DateTime CreateDate { get; set; } = DateTime.Now;
+        public virtual DateTime UpdateDate { get; set; } = DateTime.Now;
     }
 }

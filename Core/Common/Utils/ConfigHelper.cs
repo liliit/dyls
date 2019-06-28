@@ -122,13 +122,7 @@ namespace DYLS.Common.Utils
         /// <summary>
         /// DbConnectionCrm
         /// </summary>
-        public static string DbConnectionCrm = "Db:ConnectionCrm";
-
-        /// <summary>
-        /// DbConnectionKa
-        /// </summary>
-        public static string DbConnectionKa = "Db:ConnectionKa";
-
+        public static string DbConnection = "Db:Connection";
 
         /// <summary>
         /// LoginTryMaxNum

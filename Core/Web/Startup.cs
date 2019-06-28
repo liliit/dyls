@@ -32,7 +32,16 @@ namespace DYLS.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-            DalFactory.GetInstance<IDalWxUser>();
+            DalFactory.GetInstance<IDalWxUser>().Insert(new Model.Db.Wx.WxUser {
+                OpenID = "xxxxxx",
+                NickName = "",
+                Sex = 1,
+                Province="",
+                City="",
+                Country="",
+                HeadImgUrl="",
+                UnionID=""
+            });
             app.UseDefaultFiles();
             app.UseStaticFiles();
             //app.UseDirectoryBrowser();

@@ -10,28 +10,12 @@ using DYLS.Model.Pager;
 
 namespace DYLS.Common.Utils
 {
-
-    /// <summary>
-    /// 数据库连接类型
-    /// </summary>
-    public enum DbHelperConnectType
-    {
-        /// <summary>
-        /// 微站
-        /// </summary>
-        Crm,
-        /// <summary>
-        /// ka
-        /// </summary>
-        Ka
-    }
-
     public static class DbHelper
     {
 
         static DbHelper()
         {
-            SimpleCRUD.SetDialect(SimpleCRUD.Dialect.SQLServer);
+            SimpleCRUD.SetDialect(SimpleCRUD.Dialect.MySQL);
         }
 
         /// <summary>
@@ -40,7 +24,7 @@ namespace DYLS.Common.Utils
         /// <returns></returns>
         public static IDbConnection GetNewConnection()
         {
-            IDbConnection conn = new MySqlConnection();
+            IDbConnection conn = new MySqlConnection(ConfigHelper.Get(ConfigHelper.DbConnection));
             HttpContextHelper.Set(HttpContextHelper.DbConn, conn);
             conn.Open();
             return conn;
@@ -70,7 +54,7 @@ namespace DYLS.Common.Utils
 
         /// <summary>
         /// 获取分页数据, 复杂版本, 支持join
-        /// </summary>
+        /// </summary>d
         /// <param name="pager"></param>
         /// <param name="where">查询条件</param>
         /// <param name="param">参数</param>

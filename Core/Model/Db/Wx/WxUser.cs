@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DYLS.Model.Db.Wx
 {
+    [Table("Wx_User")]
     public class WxUser:DbBaseModel
     {
         public string OpenID { get; set; }
