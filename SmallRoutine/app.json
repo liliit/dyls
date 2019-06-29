@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/authorization/user/user",
+    "pages/authorization/mobile/mobile",
     "pages/home/index/index",
     "pages/home/product/product",
     "pages/home/business/business",

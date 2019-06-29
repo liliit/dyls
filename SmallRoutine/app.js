@@ -35,10 +35,13 @@ App({
         let custom = wx.getMenuButtonBoundingClientRect();
         this.globalData.Custom = custom;
         this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
+        this.globalData.height = e.windowHeight - this.globalData.CustomBar;
       }
     })
   },
   globalData: {
-    userInfo: null
+    userInfo:{},
+    api:"http://test.diyiluosi.com:8123/",
+    file:"http://file.diyiluosi.com:8123/",
   }
 })

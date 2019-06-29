@@ -1,0 +1,6 @@
+C:\myjob\start\dyls\Core\AppletApiController\bin\Debug\netcoreapp2.2\DYLS.AppletApiController.deps.json
+C:\myjob\start\dyls\Core\AppletApiController\bin\Debug\netcoreapp2.2\DYLS.AppletApiController.dll
+C:\myjob\start\dyls\Core\AppletApiController\obj\Debug\netcoreapp2.2\AppletApiController.csprojAssemblyReference.cache
+C:\myjob\start\dyls\Core\AppletApiController\obj\Debug\netcoreapp2.2\AppletApiController.csproj.CoreCompileInputs.cache
+C:\myjob\start\dyls\Core\AppletApiController\obj\Debug\netcoreapp2.2\AppletApiController.AssemblyInfoInputs.cache
+C:\myjob\start\dyls\Core\AppletApiController\obj\Debug\netcoreapp2.2\AppletApiController.AssemblyInfo.cs

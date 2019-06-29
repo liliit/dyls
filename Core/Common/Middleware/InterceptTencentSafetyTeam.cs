@@ -12,9 +12,9 @@ using Microsoft.AspNetCore.Http.Internal;
 namespace DYLS.Common.Middleware
 {
     /// <summary>
-    /// InterceptTencentSafetyTeam 中间件
+    /// InterceptDYLSSafetyTeam 中间件
     /// </summary>
-    public class InterceptTencentSafetyTeam
+    public class InterceptDYLSSafetyTeam
     {
         /// <summary>
         /// 代理 架构要求的
@@ -26,7 +26,7 @@ namespace DYLS.Common.Middleware
         /// 构造方法
         /// </summary>
         /// <param name="next"></param>
-        public InterceptTencentSafetyTeam(RequestDelegate next)
+        public InterceptDYLSSafetyTeam(RequestDelegate next)
         {
             _next = next;
         }
@@ -41,7 +41,7 @@ namespace DYLS.Common.Middleware
             var ips = ConfigHelper.Get(ConfigHelper.WebBlackIps);
             var ip = SystemHelper.GetClientIp();
             var ua = HttpContextHelper.GetUa();
-            if (context.Request.Headers.ContainsKey("Tencent-Leakscan") || context.Request.Headers.ContainsKey("X-Scanner-Uuid") || ua.Contains("tencent_security_team") || ips.Contains(ip))
+            if (context.Request.Headers.ContainsKey("DYLS-Leakscan") || context.Request.Headers.ContainsKey("X-Scanner-Uuid") || ua.Contains("DYLS_security_team") || ips.Contains(ip))
             {
                 await context.Response.WriteAsync("success");
                 return;

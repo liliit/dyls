@@ -24,37 +24,21 @@ namespace DYLS.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             HttpContextHelper.Env = env;
-            app.UseMiddleware<InterceptTencentSafetyTeam>();
-            app.UseMiddleware<AutoHttps>();
-            app.UseMiddleware<PageCache>();
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            //app.UseMiddleware<AutoHttps>();
+            //app.UseMiddleware<PageCache>();
+            //app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            DalFactory.GetInstance<IDalWxUser>().Insert(new Model.Db.Wx.WxUser {
-                OpenID = "xxxxxx",
-                NickName = "",
-                Sex = 1,
-                Province="",
-                City="",
-                Country="",
-                HeadImgUrl="",
-                UnionID=""
-            });
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            //app.UseDirectoryBrowser();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}/{cid?}");
             });
-            /*app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });*/
         }
     }
 }

@@ -1,0 +1,26 @@
+.backgroud{
+  background-color: #fff;
+  width: 760rpx;
+}
+.userTitle{
+  text-align: center;
+  padding-top: 30rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: aqua;
+}
+.text{
+  text-align: center;
+}
+.button button{
+  margin-top: 50rpx;
+  width: 80%;
+  background-color: #3cb035;
+  color: #fff;
+}
+.button image{
+  width: 60rpx;
+  height: 60rpx;
+  position: fixed;
+  left: 20;
+}

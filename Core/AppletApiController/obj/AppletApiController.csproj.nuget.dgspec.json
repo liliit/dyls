@@ -1,0 +1,287 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\myjob\\start\\dyls\\Core\\AppletApiController\\AppletApiController.csproj": {}
+  },
+  "projects": {
+    "C:\\myjob\\start\\dyls\\Core\\AppletApiController\\AppletApiController.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\myjob\\start\\dyls\\Core\\AppletApiController\\AppletApiController.csproj",
+        "projectName": "DYLS.AppletApiController",
+        "projectPath": "C:\\myjob\\start\\dyls\\Core\\AppletApiController\\AppletApiController.csproj",
+        "packagesPath": "C:\\Users\\lilii\\.nuget\\packages\\",
+        "outputPath": "C:\\myjob\\start\\dyls\\Core\\AppletApiController\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\lilii\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\myjob\\start\\dyls\\Core\\Common\\Common.csproj": {
+                "projectPath": "C:\\myjob\\start\\dyls\\Core\\Common\\Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\myjob\\start\\dyls\\Core\\Common\\Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\myjob\\start\\dyls\\Core\\Common\\Common.csproj",
+        "projectName": "DYLS.Common",
+        "projectPath": "C:\\myjob\\start\\dyls\\Core\\Common\\Common.csproj",
+        "packagesPath": "C:\\Users\\lilii\\.nuget\\packages\\",
+        "outputPath": "C:\\myjob\\start\\dyls\\Core\\Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\lilii\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\myjob\\start\\dyls\\Core\\IDal\\IDal.csproj": {
+                "projectPath": "C:\\myjob\\start\\dyls\\Core\\IDal\\IDal.csproj"
+              },
+              "C:\\myjob\\start\\dyls\\Core\\Model\\Model.csproj": {
+                "projectPath": "C:\\myjob\\start\\dyls\\Core\\Model\\Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[1.50.5, )"
+            },
+            "Dapper.SimpleCRUD": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Microsoft.AspNetCore.All": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.16, )"
+            },
+            "NPOI": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "NPOI.OOXML.dll": {
+              "target": "Package",
+              "version": "[2.0.6, )"
+            },
+            "NPOI.OpenXml4Net.dll": {
+              "target": "Package",
+              "version": "[2.0.6, )"
+            },
+            "NPOI.OpenXmlFormats.dll": {
+              "target": "Package",
+              "version": "[2.0.6, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\myjob\\start\\dyls\\Core\\IDal\\IDal.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\myjob\\start\\dyls\\Core\\IDal\\IDal.csproj",
+        "projectName": "DYLS.IDal",
+        "projectPath": "C:\\myjob\\start\\dyls\\Core\\IDal\\IDal.csproj",
+        "packagesPath": "C:\\Users\\lilii\\.nuget\\packages\\",
+        "outputPath": "C:\\myjob\\start\\dyls\\Core\\IDal\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\lilii\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\myjob\\start\\dyls\\Core\\Model\\Model.csproj": {
+                "projectPath": "C:\\myjob\\start\\dyls\\Core\\Model\\Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[1.50.5, )"
+            },
+            "Dapper.SimpleCRUD": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Ninject": {
+              "target": "Package",
+              "version": "[3.3.4, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\myjob\\start\\dyls\\Core\\Model\\Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\myjob\\start\\dyls\\Core\\Model\\Model.csproj",
+        "projectName": "DYLS.Model",
+        "projectPath": "C:\\myjob\\start\\dyls\\Core\\Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\lilii\\.nuget\\packages\\",
+        "outputPath": "C:\\myjob\\start\\dyls\\Core\\Model\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\lilii\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.AspNetCore.All": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

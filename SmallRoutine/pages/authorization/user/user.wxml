@@ -1,0 +1,17 @@
+<cu-custom bgColor="bg-gradual-blue">
+  <view slot="content">用户授权</view>
+</cu-custom>
+<view class="backgroud" style="height:{{height}}px">
+  <view style="height:{{height/2}}px"></view>
+  <view style="height:{{height/2}}px">
+    <view class='text'>用户授权仅用于协助您登录</view>
+    <view class='text'>您的信息和数据将受到保护</view>
+    <view class="button">
+
+      <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录
+        <!-- <image src="../../../images/icon/wechart.png" /> -->
+      </button>
+      
+    </view>
+  </view>
+</view>
