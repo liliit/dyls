@@ -40,8 +40,7 @@ App({
     })
   },
   globalData: {
-    userInfo:{},
-    api:"http://test.diyiluosi.com:8123/",
+    api:"http://test.diyiluosi.com:8123/appletapi/",
     file:"http://file.diyiluosi.com:8123/",
   }
 })

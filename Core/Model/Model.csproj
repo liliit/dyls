@@ -15,7 +15,6 @@
     <Folder Include="Db\Web\" />
     <Folder Include="Pager\Manage\" />
     <Folder Include="Pager\Web\" />
-    <Folder Include="Request\" />
     <Folder Include="Response\" />
   </ItemGroup>
  

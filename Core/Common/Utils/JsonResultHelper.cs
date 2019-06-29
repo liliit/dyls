@@ -158,6 +158,15 @@ namespace DYLS.Common.Utils
         /// <summary>
         /// 返回成功
         /// </summary>
+        /// <returns></returns>
+        public static JsonResult Error(object data = null)
+        {
+            return JsonResult(1, "error", data);
+        }
+
+        /// <summary>
+        /// 返回成功
+        /// </summary>
         /// <param name="data"></param>
         /// <param name="msg"></param>
         /// <returns></returns>

@@ -7,7 +7,6 @@ namespace DYLS.Common.Utils
 {
     public class CookieHelper
     {
-
         /// <summary>
         /// WebUserKey
         /// </summary>

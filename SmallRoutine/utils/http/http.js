@@ -4,14 +4,27 @@ import md5 from './md5.js'
 
 export const post=(param={})=>{
 
-    wx.request({
-        url:app.globalData.api+param.url,
-        data: param.data,
-        method: 'POST',
-        header: header(),
-        success:res=>{
-            
-        }
+    return new Promise(function(resolve,reject){
+
+        wx.request({
+            url:app.globalData.api+param.url,
+            data: param.data,
+            method: 'POST',
+            header: header(),
+            success:res=>{
+                if(res.data.code==0)
+                {
+                    resolve(res.data);
+                }
+                else
+                {
+
+                }
+
+                
+            }
+        })
+
     })
 
 }
