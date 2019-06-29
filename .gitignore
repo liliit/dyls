@@ -20,3 +20,5 @@ Core/WebController/bin
 Core/SmallRoutineController/bin
 Core/SmallRoutineController/obj
 Core/Web/Logs
+Core/AppletApiController/obj
+Core/AppletApiController/bin

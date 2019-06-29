@@ -8,7 +8,6 @@ namespace DYLS.AppletApiController
 {
     public class IndexController:ControllerBase
     {
-        [HttpPost]
         public ActionResult Index()
         {
             return JsonResultHelper.Success("123");
