@@ -3,7 +3,9 @@ var app = getApp();
 import md5 from '../common/md5.js'
 
 export const post=(param={})=>{
-
+    wx.showLoading({
+        title: "加载中"
+      })
     return new Promise(function(resolve,reject){
 
         wx.request({
@@ -12,16 +14,16 @@ export const post=(param={})=>{
             method: 'POST',
             header: header(),
             success:res=>{
+                wx.hideLoading();
+
                 if(res.data.code==0)
                 {
                     resolve(res.data);
                 }
                 else
                 {
-
+                    
                 }
-
-                
             }
         })
 
@@ -38,8 +40,9 @@ export const header=(param={})=>{
   let appid = app.globalData.appid
   //signature
   let signature = md5.hexMD5(time + key + appid);
+
   let header = {
-    "Dyls-Applet": "Agent-Remote",
+    "DYLS-Applet": "Agent-Remote",
     "X-Scanner-Ud": "Addr",
     timesTamp: time,
     signature: signature

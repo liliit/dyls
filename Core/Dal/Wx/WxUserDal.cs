@@ -7,14 +7,14 @@ using System.Text;
 
 namespace DYLS.Dal.Wx.Applet
 {
-    public class WxAppletUserDal : BaseDal<Wx_Applet_User>, IDalWxAppletUser
+    public class WxUserDal : BaseDal<Wx_User>, IDalWxUser
     {
-        public Wx_Applet_User GetByOpenId(string openId)
+        public Wx_User GetByOpenId(string openId)
         {
-            string sql = $" SELECT * FROM {TableName} WHERE OpenID=@openoid ";
+            string sql = $" SELECT * FROM {TableName} WHERE Applet_OpenId=@openoid ";
             var param = new DynamicParameters();
             param.Add("openoid",openId);
-            return conn.QueryFirstOrDefault<Wx_Applet_User>(sql, param);
+            return conn.QueryFirstOrDefault<Wx_User>(sql, param);
         }
     }
 }

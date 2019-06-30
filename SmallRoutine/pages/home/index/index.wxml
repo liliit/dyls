@@ -27,7 +27,7 @@
 <!-- 推荐商家 -->
 <view class="cu-bar bg-white solid-bottom margin-top">
   <view class="action">
-    <text class="cuIcon-title text-orange "></text> 推荐商家
+    <text class="cuIcon-title text-orange "></text> 精选商家
   </view>
 </view>
 <view class="cu-list menu-avatar">

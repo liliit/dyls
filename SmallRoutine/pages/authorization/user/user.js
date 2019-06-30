@@ -38,7 +38,7 @@ Page({
       var login = hp.cache().get(hp.setting().login);
 
       var obj = {
-        openid: login.openid,
+        applet_OpenId: login.openid,
         unionid: login.unionid
       }
 
@@ -61,11 +61,12 @@ Page({
     var login = hp.cache().get(hp.setting().login);
     var userInfo = hp.cache().get(hp.setting().userInfo)
     var user = hp.cache().get(hp.setting().user)
+    this.Login();
     if (login && userInfo && user) {
       hp.redirect().home_index();
     }
     else {
-      this.Login();
+      
     }
   },
 

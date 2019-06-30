@@ -5,10 +5,10 @@ using System.Text;
 
 namespace DYLS.Model.Db.Wx
 {
-    [Table("Wx_Applet_User")]
-    public class Wx_Applet_User:DbBaseModel
+    [Table("Wx_User")]
+    public class Wx_User:DbBaseModel
     {
-        public string OpenId { get; set; }
+        public string Applet_OpenId { get; set; }
         public string NickName { get; set; }
         public int Gender { get; set; }
         public string Province { get; set; }

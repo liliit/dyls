@@ -18,14 +18,14 @@ namespace DYLS.AppletApiController
             Wx_Login login= WxHelper.Login(code.code.ToString());
             if(login.Errcode==0)
             {
-                var dalWxUser = DalFactory.GetInstance<IDalWxAppletUser>();
+                var dalWxUser = DalFactory.GetInstance<IDalWxUser>();
 
                 var wxUser = dalWxUser.GetByOpenId(login.Openid);
                 if(wxUser==null)
                 {
-                    dalWxUser.Insert(new Wx_Applet_User
+                    dalWxUser.Insert(new Wx_User
                     {
-                        OpenId=login.Openid,
+                        Applet_OpenId = login.Openid,
                         UnionId=login.unionid
                     });
                 }
@@ -38,11 +38,11 @@ namespace DYLS.AppletApiController
             }
         }
 
-        public ActionResult UserInfo([FromBody] Wx_Applet_User user)
+        public ActionResult UserInfo([FromBody] Wx_User user)
         {
             long? t = 0;
-            var dalWxUser = DalFactory.GetInstance<IDalWxAppletUser>();
-            var wxUser = dalWxUser.GetByOpenId(user.OpenId);
+            var dalWxUser = DalFactory.GetInstance<IDalWxUser>();
+            var wxUser = dalWxUser.GetByOpenId(user.Applet_OpenId);
             if (wxUser == null)
             {
                 t=dalWxUser.Insert(user);

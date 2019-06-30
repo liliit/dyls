@@ -40,6 +40,8 @@ App({
     })
   },
   globalData: {
+    appletkey: 'QDfASLZEeAgAmIZWNwgQKBAALZCfgQgZBAEf0ALooAAAg6EgEiQAJeAEeACAgo1FFJqgCCiVq4Af4mDOY',
+    appid: 'wx874b702b0957bcdf',
     api:"http://test.diyiluosi.com:8123/appletapi/",
     file:"http://file.diyiluosi.com:8123/",
   }

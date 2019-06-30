@@ -75,14 +75,19 @@ namespace DYLS.Common.Utils
         public static string DbConnection = "Db:Connection";
 
         /// <summary>
-        /// WxAppId
+        /// Wx_Applet_AppId
         /// </summary>
         public static string Wx_Applet_AppId = "Wx_Applet:AppId";
 
         /// <summary>
-        /// WxAppSecret
+        /// Wx_Applet_AppSecret
         /// </summary>
         public static string Wx_Applet_AppSecret = "Wx_Applet:AppSecret";
+
+        /// <summary>
+        /// Wx_Applet_Key
+        /// </summary>
+        public static string Wx_Applet_Key = "Wx_Applet:Key";
 
         /// <summary>
         /// _configuration

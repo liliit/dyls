@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Filter\Manage\" />
-    <Folder Include="Filter\Web\" />
     <Folder Include="Import\Web\" />
   </ItemGroup>
 

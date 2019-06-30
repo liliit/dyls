@@ -5,8 +5,8 @@ using System.Text;
 
 namespace DYLS.IDal.Wx.Applet
 {
-    public interface IDalWxAppletUser:IDalBase<Wx_Applet_User>
+    public interface IDalWxUser:IDalBase<Wx_User>
     {
-        Wx_Applet_User GetByOpenId(string openId);
+        Wx_User GetByOpenId(string openId);
     }
 }
