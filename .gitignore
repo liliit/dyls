@@ -9,8 +9,8 @@ Core/Model/bin
 Core/Model/obj
 Core/Common/obj
 Core/Common/bin
-Core/ApiController/obj
-Core/ApiController/bin
+Core/ManageApiController/obj
+Core/ManageApiController/bin
 Core/Web/obj
 Core/Web/bin
 Core/WebApiController/obj
