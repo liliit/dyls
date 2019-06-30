@@ -1,6 +1,6 @@
 
 var app = getApp();
-import md5 from './md5.js'
+import md5 from '../common/md5.js'
 
 export const post=(param={})=>{
 

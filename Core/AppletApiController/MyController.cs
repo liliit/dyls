@@ -1,5 +1,8 @@
 ﻿using DYLS.Common.Utils;
 using DYLS.Common.Wx.Applet;
+using DYLS.IDal;
+using DYLS.IDal.Wx.Applet;
+using DYLS.Model.Db.Wx;
 using DYLS.Model.Request.Wx.Applet;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +18,18 @@ namespace DYLS.AppletApiController
             Wx_Login login= WxHelper.Login(code.code.ToString());
             if(login.Errcode==0)
             {
+                var dalWxUser = DalFactory.GetInstance<IDalWxAppletUser>();
+
+                var wxUser = dalWxUser.GetByOpenId(login.Openid);
+                if(wxUser==null)
+                {
+                    dalWxUser.Insert(new Wx_Applet_User
+                    {
+                        OpenId=login.Openid,
+                        UnionId=login.unionid
+                    });
+                }
+
                 return JsonResultHelper.Success(login);
             }
             else
@@ -23,9 +38,26 @@ namespace DYLS.AppletApiController
             }
         }
 
-        public ActionResult UserInfo()
+        public ActionResult UserInfo([FromBody] Wx_Applet_User user)
         {
-            return JsonResultHelper.Success();
+            long? t = 0;
+            var dalWxUser = DalFactory.GetInstance<IDalWxAppletUser>();
+            var wxUser = dalWxUser.GetByOpenId(user.OpenId);
+            if (wxUser == null)
+            {
+                t=dalWxUser.Insert(user);
+            }
+            else
+            {
+                user.Id = wxUser.Id;
+                t=dalWxUser.Update(user);
+            }
+
+            if(t.Value>0)
+                return JsonResultHelper.Success(user);
+            
+            else
+                return JsonResultHelper.Error(user);
         }
     }
 }
